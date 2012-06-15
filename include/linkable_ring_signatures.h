@@ -1,3 +1,6 @@
+#ifndef LINKABLE_RING_SIGNATURES_H_GUARD
+#define LINKABLE_RING_SIGNATURES_H_GUARD
+
 #include <cryptopp/hex.h>
 #include <cryptopp/sha.h>
 #include <cryptopp/base64.h>
@@ -35,3 +38,4 @@ using CryptoPP::SecByteBlock;
 using namespace std;
 using namespace CryptoPP;
 
+#endif
