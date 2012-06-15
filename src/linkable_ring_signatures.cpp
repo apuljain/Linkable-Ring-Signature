@@ -120,7 +120,15 @@ string GenerateString(vector<Integer> v)
 	return output;
 }
 
+/* XXX C++ style tip: the class definition should always be in the
+   header (.h) file and the implementation of the class should be
+   in the .cpp file.
 
+   Another useful convention is to prefix private class members names
+   (like "self_identity" below) with an underscore (_). That makes
+   it easier to tell which variables are class variables and which
+   are local variables.
+*/
 class LinkableRingSignProver
 {
 	private:
@@ -196,7 +204,12 @@ string Hash1(string input_string)
 
 	//calculate hash
 	hash.CalculateDigest(digest, (const byte *)input_string.c_str(), input_string.size());
-	
+
+  /* XXX C++ note: Whenever you use "new" there should be a corresponding "delete" call.
+     The code as it is written leaks memory, since it allocates memory with "new"
+     but it never frees the allocated memory. 
+   */
+
 	//encode in Hex
 	CryptoPP::HexEncoder encoder;
 	CryptoPP::StringSink *SS = new CryptoPP::StringSink(output);
@@ -380,6 +393,9 @@ bool RingSignVerifier::VerifySignature(Integer &C, vector<Integer> &S, Integer &
 	cout<<"H': "<<h_dash<<endl;
 	#endif
 
+  /* XXX C++ style tip: you can replace the lines below by
+      return (C == h_dash)
+  */
 	if(C == h_dash)
 		return true;
 
@@ -390,7 +406,7 @@ bool RingSignVerifier::VerifySignature(Integer &C, vector<Integer> &S, Integer &
 int main()
 {
 	//pass n, identity and message
-	LinkableRingSignProver P(4, 2, Integer("1010101"));
+	LinkableRingSignProver P(4, 2, Integer("A very short message"));
 		
 	Integer C, Y;
 	vector<Integer> S;
