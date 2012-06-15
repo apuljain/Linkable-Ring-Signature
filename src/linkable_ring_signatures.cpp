@@ -1,4 +1,34 @@
+/* 
+   XXX C++ style note: it's usually not a good idea to have relative
+   path names ("../") in #includes. The ".." syntax is not portable
+   and it can also cause unexpected behavior when you have nested
+   includes (as often happens in C/C++ projects).
+
+   A better technique is to add "-Iinclude" to your makefile CFLAGS
+   variable. Then you can write the line below as 
+
+    #include "linkable_ring_signature.h"
+
+*/
 #include "../include/linkable_ring_signatures.h"
+
+/*
+   XXX C++ style note: Using "//" comments after a #define
+   statement is dangerous because the comment is now included
+   in the variable DEBUG. If you do something like:
+
+   if(DEBUG) {
+      ...
+   }
+
+   the compiler will expand that to:
+
+   if(TRUE //comment this line to disable debugging info on screen.) {
+      ...
+   }
+  
+   and the compiler will get confused and complain.
+*/
 
 #define DEBUG TRUE			//comment this line to disable debugging info on screen.
 
@@ -9,9 +39,14 @@ void GetGroupParameters(Integer &g, Integer &p, Integer &q)
 
 	try
 	{
-	    DH dh;
+    DH dh;
 		dh.AccessGroupParameters().GenerateRandomWithKeySize(rnd, bits);
 
+    /*
+       XXX C++ style note: most programmers avoid exceptions at all costs
+       since they often make code harder to read. Having GetGroupParameters()
+       return a meaningful error code would probably be a better strategy.
+    */
 		if(!dh.GetGroupParameters().ValidateGroup(rnd, 3))
 			throw runtime_error("Failed to validate prime and generator");
 
@@ -26,13 +61,19 @@ void GetGroupParameters(Integer &g, Integer &p, Integer &q)
 		g = dh.GetGroupParameters().GetGenerator();
 		count = g.BitCount();
 
+    /*
+      XXX the count variable is reused a bunch of times so the lines below
+      will not print out the correct debugging info
+    */ 
 		#ifdef DEBUG
 		cout << "P (" << std::dec << count << "): " << std::hex << p << endl;
 		cout << "Q (" << std::dec << count << "): " << std::hex << q << endl;
 		cout << "G (" << std::dec << count << "): " << std::dec << g << endl;
 		#endif
 		
-
+    /*
+       XXX same as comment above re: exceptions
+     */
 		Integer v = ModularExponentiation(g, q, p);
 		if(v != Integer::One())
 			throw runtime_error("Failed to verify order of the subgroup");
@@ -54,6 +95,7 @@ string IntegerToString(Integer a)
 {
 	stringstream ss;
 	ss<<a;
+  /* XXX small style note: you probably don't need the temp variable here */
 	string temp;
 	temp = ss.str();
 	return temp;
@@ -65,6 +107,9 @@ string GenerateString(vector<Integer> v)
 	string output;
 	Integer temp;
 	//assuming 0th position is invalid
+  /* XXX is there a reason for leaving the 0th position empty?
+     This might confuse users of the class...
+   */
 
 	for(vector<Integer>::iterator itr = v.begin() + 1; itr != v.end(); itr++)
 	{
@@ -187,7 +232,11 @@ string Hash2(string input_string, Integer p, Integer q, Integer g)
 	
 	//convert into integer format
 	Integer value(output.c_str());
-	
+
+  /*
+     XXX If q doesn't evenly divide 2^512 (which it doesn't), some values
+     will appear more frequently than others. That might create a security hole.
+   */
 	value = value%q;
 
 	//get the element in group
