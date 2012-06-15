@@ -123,7 +123,7 @@ class LinkableRingSignProver
 
 		RandomPool rng;
 
-		for(int i = 1; i <= num_members; i++)
+		for(unsigned int i = 1; i <= num_members; i++)
 		{
 			public_keys.push_back(a_exp_b_mod_c(g, Integer(rng, 0, q - 1), p));			
 		}		
@@ -251,7 +251,7 @@ void LinkableRingSignProver::GenerateSignature(Integer &c1, vector<Integer> &S, 
 	S.clear();	
 	S.push_back(-1);		//0th position is invalid	
 
-	for(int i = 1; i <= num_members; i++)
+	for(unsigned int i = 1; i <= num_members; i++)
 		S.push_back(si[i]);
 
 	c1 = ci[1];
