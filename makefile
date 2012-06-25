@@ -1,17 +1,15 @@
-CC = g++
-CFLAGS = -c -Wall -pedantic 
-SRC = ./src
-BIN = ./bin
-OBJ = ./obj
+CC := g++
+CC_FLAGS := -g -c -Wall -pedantic -Iinclude -DDEBUG=TRUE
+CPP_FILES := $(wildcard src/*.cpp)
+OBJ_FILES := $(patsubst src/%.cpp, obj/%.o, $(CPP_FILES))
+LD_FLAGS := -lcryptopp
 
-all: ringsign
-	@echo "'ringsign' executable created in bin directory.."
+ringsign : $(OBJ_FILES)
+	$(CC) $(LD_FLAGS) $^ -o $@
+	@echo "\nringsign executable created...\n"
 
-ringsign : linkable_ring_signatures.o
-	$(CC) $(OBJ)/linkable_ring_signatures.o -lcryptopp -o $(BIN)/ringsign
-
-linkable_ring_signatures.o :
-	$(CC) $(CFLAGS) $(SRC)/linkable_ring_signatures.cpp -o $(OBJ)/linkable_ring_signatures.o
+obj/%.o : src/%.cpp
+	$(CC) $(CC_FLAGS) -c -o $@ $<
 
 clean :	
-	rm -rf $(OBJ)/*o $(BIN)/ringsign
+	rm -rf $(OBJ)/*o ringsign
