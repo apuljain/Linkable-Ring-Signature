@@ -27,10 +27,10 @@
 */
 
 LinkableRingSignProver::LinkableRingSignProver(unsigned int n, unsigned int identity, 
-											   Integer g_in, Integer p_in, 
-											   Integer q_in,
-											   vector<Integer> public_keys_in,
-											   Integer private_key_in):
+                                               Integer g_in, Integer p_in, 
+                                               Integer q_in,
+                                               vector<Integer> public_keys_in,
+                                               Integer private_key_in):
      _private_key(private_key_in),
  	 _self_identity(identity),
 	 num_members(n),
