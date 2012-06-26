@@ -62,11 +62,14 @@ class LinkableRingSignProver
 	//@params: num_members, identity, g, p, q, public_keys and private key.
 
 	LinkableRingSignProver(unsigned int n, unsigned int identity,
-		 Integer g_in, Integer p_in, Integer q_in, vector<Integer> public_keys_in, Integer private_key_in);
+		 	       Integer g_in, Integer p_in, Integer q_in,
+			       vector<Integer> public_keys_in,
+			       Integer private_key_in);
 	
 	//@params: message - input message to be signed.
 	//@params: updates signature variables (c1, s1....sn, y).
-	void GenerateSignature(string message, Integer &c1, vector<Integer> &S, Integer &Y);
+	void GenerateSignature(string message, Integer &c1, vector<Integer> &S,
+			       Integer &Y);
 };
 
 #endif

@@ -40,7 +40,7 @@ class LinkableRingSignVerifier
 	
 	//constructor
 	LinkableRingSignVerifier(unsigned int num_members, vector<Integer> pub_keys,
-							 Integer q, Integer p, Integer g, string m);
+				 Integer q, Integer p, Integer g, string m);
 
 	//function to verify signature.
 	bool VerifySignature(Integer &C, vector<Integer> &S, Integer &Y);
