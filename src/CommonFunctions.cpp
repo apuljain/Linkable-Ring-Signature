@@ -147,13 +147,13 @@ bytes (these might be your
 
   /*
  	XXX Actually, here memory leaks are not due to above allocation.
-		Cryptopp automatically takes care of it.
-		Since StringSink SS is attached to encoder object, encoder will
-		delete the memory allocated for SS when it is itself destroyed.
-		Refer:http://open.code-shop.com/trac/openzoep/browser/trunk/thirdp/crypto/cryptopp/Readme.txt?rev=1#L66
+	Cryptopp automatically takes care of it.
+	Since StringSink SS is attached to encoder object, encoder will
+	delete the memory allocated for SS when it is itself destroyed.
+	Refer:http://open.code-shop.com/trac/openzoep/browser/trunk/thirdp/crypto/cryptopp/Readme.txt?rev=1#L66
 	
-	XXX Memory leak, as observed, was due to other allocations in LinkableRingSignProver.cpp
-		These are fixed now.
+	XXX Memory leak, as observed, was due to other allocations in 
+	LinkableRingSignProver.cpp. These are fixed now.
    */
 	return output;
 }
@@ -204,7 +204,7 @@ string Hash2(string input_string, Integer p, Integer q, Integer g)
 	/*
 		XXX Modulo method to map hash elements seems to be working fine.
 		I'm not aware of the possible security holes due to this. However,
-		I'll add this issue into TODO file to address it in future. :)
+		I'll add this issue into TODO file to address it in future!
 	*/
 
 	value = value % q;
@@ -215,8 +215,9 @@ string Hash2(string input_string, Integer p, Integer q, Integer g)
 	output = IntegerToString(value);
 
 	/*DO NOT PREPEND 0x - OUTPUT STRING IS ALREADY IN DECIMAL!*/
+	/*THIS HAD BEEN CAUSING THE WHOLE PROBLEM SO LONG.*/
 	//prepend 0x				
-	//output = "0x" + output;	/*THIS HAD BEEN CAUSING THE WHOLE PROBLEM SO LONG.*/
+	//output = "0x" + output; 
 
 	/*
 	 XXX Can't delete SS pointer otherwise as it is attached with output.
@@ -226,8 +227,8 @@ string Hash2(string input_string, Integer p, Integer q, Integer g)
   /* XXX Please refer to my comment on Hash1() */
 
   /*
-	XXX Please refer to my answer for Hash1().
-	*/		
+     XXX Please refer to my answer for Hash1().
+  */		
 	
 	return output;
 }

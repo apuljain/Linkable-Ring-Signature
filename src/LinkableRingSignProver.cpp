@@ -2,7 +2,8 @@
 
 /*
   Constructor to initialize parameters.
-  @params: no. of members in the group, identity of member, g, p, q, public_keys, private_key.
+  @params: no. of members in the group, identity of member, g, p, q, public_keys,
+   private_key.
 */
 
 /*
@@ -20,26 +21,28 @@
 */
 
 /*
-	XXX Done! But it looks a bit messy this time because of too many parameters.
+	XXX Done! But it looks a bit messy this time because of too many
+	parameters.
 
-	XXX Too many parameters can be avoided if we assume g, p, q will be set by accessing
-	through the class object as these are public variables.
+	XXX Too many parameters can be avoided if we assume g, p, q will be set
+	by accessing through the class object as these are public variables.
 */
 
-LinkableRingSignProver::LinkableRingSignProver(unsigned int n, unsigned int identity, 
+LinkableRingSignProver::LinkableRingSignProver(unsigned int n, 
+					       unsigned int identity, 
                                                Integer g_in, Integer p_in, 
                                                Integer q_in,
                                                vector<Integer> public_keys_in,
                                                Integer private_key_in):
-     _private_key(private_key_in),
+     	 _private_key(private_key_in),
  	 _self_identity(identity),
 	 num_members(n),
 	 g(g_in), p(p_in), q(q_in)
 {
 	for(vector<Integer>::iterator itr = public_keys_in.begin(); 
-		itr != public_keys_in.end(); itr++)
+             itr != public_keys_in.end(); itr++)
 	{
-		public_keys.push_back(*itr);
+	 	public_keys.push_back(*itr);
 	}
 }
 
@@ -47,7 +50,7 @@ LinkableRingSignProver::LinkableRingSignProver(unsigned int n, unsigned int iden
   returns updated arguments (i.e. signature : (c1, s1...sn, y)) 
 */
 void LinkableRingSignProver::GenerateSignature(string message, Integer &c1,
-											   vector<Integer> &S, Integer &Y)
+					       vector<Integer> &S, Integer &Y)
 {
 	//set message
 	this->m = message;
@@ -63,9 +66,9 @@ void LinkableRingSignProver::GenerateSignature(string message, Integer &c1,
 	Integer *ci = new Integer[num_members];
 	Integer *si = new Integer[num_members];
 
-	string temp = GenerateString(public_keys) + IntegerToString(y_tilde) + m +
-				  IntegerToString(a_exp_b_mod_c(g, u, p)) + 
-				  IntegerToString(a_exp_b_mod_c(h, u, p));
+	string temp = GenerateString(public_keys) + IntegerToString(y_tilde) + 
+		      m + IntegerToString(a_exp_b_mod_c(g, u, p)) +
+		      IntegerToString(a_exp_b_mod_c(h, u, p));
 
 	Integer b(Hash1(temp).c_str());
 
@@ -80,18 +83,19 @@ void LinkableRingSignProver::GenerateSignature(string message, Integer &c1,
 		si[j] = (Integer(rng, 0, q - 1));
 		
 	
-		temp = Hash1(GenerateString(public_keys) + IntegerToString(y_tilde) + m +
-			   IntegerToString(a_times_b_mod_c(a_exp_b_mod_c(g, si[j], p),
-							   a_exp_b_mod_c(public_keys[j], ci[j], p), p)) +
-
-			   IntegerToString(a_times_b_mod_c(a_exp_b_mod_c(h, si[j], p),
-							   a_exp_b_mod_c(y_tilde, ci[j], p), p)));
+		temp = Hash1(GenerateString(public_keys) + 
+			     IntegerToString(y_tilde) + m +
+		       	     IntegerToString(a_times_b_mod_c(a_exp_b_mod_c(g, si[j], p),
+			     a_exp_b_mod_c(public_keys[j], ci[j], p), p)) +
+			     IntegerToString(a_times_b_mod_c(a_exp_b_mod_c(h, si[j], p),
+			     a_exp_b_mod_c(y_tilde, ci[j], p), p)));
 
 		ci[i] = Integer(temp.c_str());
 	}
 
 	//update si_pi value (i.e. corresponding to self identity)
-	si[_self_identity] = (u % q - a_times_b_mod_c(_private_key, ci[_self_identity], q)) % q;
+	si[_self_identity] = (u % q - a_times_b_mod_c(_private_key,
+					              ci[_self_identity], q)) % q;
   	
 	//update signature parameters (input args)
 	S.clear();
