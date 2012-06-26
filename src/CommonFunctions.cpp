@@ -100,7 +100,7 @@ string Hash1(string input_string)
 
 	//calculate hash
 	hash.CalculateDigest(digest, (const byte *)input_string.c_str(), 
-					     input_string.size());
+			     input_string.size());
 
 	//encode in Hex
 	CryptoPP::HexEncoder encoder(new CryptoPP::StringSink(output), true);
@@ -170,7 +170,7 @@ string Hash2(string input_string, Integer p, Integer q, Integer g)
 
 	//calculate hash
 	hash.CalculateDigest(digest, (const byte *)input_string.c_str(), 
-						 input_string.size());
+			     input_string.size());
 	
 	//encode in Hex
 	CryptoPP::HexEncoder encoder(new CryptoPP::StringSink(output), true);
