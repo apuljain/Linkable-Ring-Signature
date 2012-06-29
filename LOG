@@ -1,0 +1,20 @@
+June 26 2012
+================================================================================
+-Restructured code for ZKP one-out-of-n.
+-Class definition and declaration separated.
+-Dependent library includes moved to .hpp files.
+-Removed linked list and replaced with vectors.
+-Improved API - separate class for Prover and Verifier.
+-Support for identity to specify which key-pair is known.
+-Updated indentation.
+
+June 27 2012
+================================================================================
+-Setup dissent on local machine (Install dependencies - some system clean
+ up done).
+-Look into javascript IDEs and crypto libraries - decided to use firebug.
+
+June 28 2012
+================================================================================
+-Understanding Authentication modules and Henry's auth framework code.
+-Start converting Linkable Ring Signature code to Qt and Dissent Auth framework.
