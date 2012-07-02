@@ -18,3 +18,12 @@ June 28 2012
 ================================================================================
 -Understanding Authentication modules and Henry's auth framework code.
 -Start converting Linkable Ring Signature code to Qt and Dissent Auth framework.
+
+June 29 2012
+================================================================================
+-Framework for Linkable-Ring-Signature as per Dissent architecture
+ developed and proposed.
+
+June 30 2012, July 1 2012
+================================================================================
+-Roster code written.
