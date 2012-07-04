@@ -26,4 +26,25 @@ June 29 2012
 
 June 30 2012, July 1 2012
 ================================================================================
--Roster code written.
+-Started to write Roster code (read/write from/to file).
+
+July 1 2012
+================================================================================
+-Get started to write NullAuthenticatorLRS code.
+
+July 2 2012
+================================================================================
+-Get NullAuthenticatorLRS code completed. Made some changes to existing group
+ class - later discarded by David.
+
+July 3 2012
+================================================================================
+-Start afresh to write LRSAuthenticat* modules - No modificaton of any existing
+ classes. Problem of maintaining group variables - stored as private variables
+ as a tenporary hack.
+
+July 4 2012
+================================================================================
+-LRSAuthenticat* code completed. Created a LRSignature class - to store signature
+ components. TESTing is to be done.
+
