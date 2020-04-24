@@ -77,7 +77,7 @@ void LinkableRingSignProver::GenerateSignature(string message, Integer &c1,
 	//initialise parameter for iteration
 	unsigned int i = (_self_identity + 2) % num_members;
 	
-	for(; i != _self_identity + 1; i = (i + 1) % num_members)
+	for(; i != (_self_identity + 1 % num_members); i = (i + 1) % num_members)
 	{
 		int j = (i - 1) % num_members;
 		si[j] = (Integer(rng, 0, q - 1));
